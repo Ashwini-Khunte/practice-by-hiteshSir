@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+ 
+    <button class="max-w-sm ml-20 bg-red-300 mt-20 shadow-md rounded-md p-8">Show data</button>
+    
+    <div class="max-w-sm mx-auto bg-white shadow-md rounded-md overflow-hidden mt-20 invisible main-container">
+        <img class="w-full h-48 object-cover object-center imgx" alt="Card Image">
+       
+        <div class="bg-gray-100 p-4">
+            <a href="#" class="text-blue-500 font-semibold Followers"></a>
+        </div>
+    </div>
+
+
+    <script>
+        
+        const newImg = document.querySelector(".imgx")
+        const followers = document.querySelector(".Followers")
+        const btn = document.querySelector("button");
+        const container = document.querySelector(".main-container");
+
+
+        const requestUrl = 'https://api.github.com/users/hiteshchoudhary';
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", requestUrl);
+        xhr.onreadystatechange = function () {
+            btn.addEventListener("click", (e) => { 
+                container.classList.remove('invisible')
+                if(xhr.readyState === 4) {
+                const data = JSON.parse(this.responseText);
+                newImg.src = (data.avatar_url);
+                followers.innerHTML = `Followers:  ${data.followers}`
+            }
+            })
+            
+        }
+        xhr.send();
+    </script>
+</body>
+</html>
